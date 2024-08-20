@@ -1,0 +1,61 @@
+{% extends 'homepage.html' %}
+{% block home %}
+<!-- SECTION -->
+<div class="section">
+    <div class="container">
+        <div class="row">
+            <!-- Cart Table -->
+            <div class="col-12">
+                <div class="section-title text-center">
+                    <h3 class="title">Your Cart</h3>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-striped align-middle">
+                        <thead>
+                            <tr>
+                                <th scope="col">Product</th>
+                                <th scope="col"></th>
+                                <th scope="col">Unit Price</th>
+                                <th scope="col">Quantity</th>
+                                <th scope="col">Total</th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for i in cart %}
+                            <tr>
+                                <td class="cart-pic">
+                                    <img src="{{i.product.image.url}}" alt="Product Image" class="img-thumbnail" style="height: 100px; width: 100px;">
+                                </td>
+                                <td class="cart-title">
+                                    <h4 class="product-name">{{i.product.title}}</h4>
+                                </td>
+                                <td class="cart-price">
+                                    <h5>&#8377; {{i.product.price}}</h5>
+                                </td>
+                                <td class="cart-quantity">
+                                    <div class="d-flex align-items-center">
+                                        <a href="#" class="btn btn-outline-secondary btn-sm"><i class="fa-solid fa-minus fa-xs" style="color: #000000;"></i></a>
+                                        <span class="mx-2">{{i.quantity}}</span>
+                                        <a href="#" class="btn btn-outline-secondary btn-sm"><i class="fa-solid fa-plus fa-xs" style="color: #000000;"></i></a>
+                                    </div>
+                                </td>
+                                <td class="cart-total">
+                                    <h5>&#8377; {{i.total_amount}}</h5>
+                                </td>
+                                <td class="cart-actions">
+                                    <a href="#" class="btn btn-outline-danger btn-sm"><i class="fa-solid fa-trash"></i></a>
+                                    <a href="#" class="btn btn-outline-success btn-sm mx-2"><i class="fa-regular fa-credit-card"></i> Check Out</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- /Cart Table -->
+        </div>
+    </div>
+</div>
+<!-- /SECTION -->
+{% endblock home %}
