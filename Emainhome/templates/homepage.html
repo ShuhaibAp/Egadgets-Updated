@@ -35,8 +35,8 @@
 
     </head>
 	<body>
-		<!-- HEADER -->
-		<header>
+	<!-- HEADER -->
+	<header>
     <!-- TOP HEADER -->
     <div id="top-header">
         <div class="container">
@@ -50,8 +50,12 @@
                 {% if user.is_authenticated %}
                     <!-- Show username if the user is authenticated -->
                     <li><a href="#"><i class="fa fa-user-o"></i> {{ user.username }}</a></li>
-                    <!-- Optionally, add a logout link -->
+                    {% for i in cart %}
+                    {% if request.path != '/clist/' and request.path != '/Chk/i.id' %}
+                    <!--a logout link -->
                     <li><a href="{% url 'lout' %}?next={{ request.get_full_path }}"><i class="fa fa-sign-out"></i> Logout</a></li>
+                    {% endif %}
+                    {% endfor %}
                 {% else %}
                     <!-- Show login link if the user is not authenticated -->
                     <li><a href="{% url 'log' %}?next={{ request.get_full_path }}"><i class="fa fa-user-o"></i> Login</a></li>
@@ -59,7 +63,7 @@
             </ul>
         </div>
     </div>
-</header>
+
 
 			<!-- /TOP HEADER -->
 
@@ -69,7 +73,7 @@
         <!-- row -->
         <div class="row">
             <!-- LOGO -->
-            <div class="col-md-3">
+            <div class="col-lg-4 col-md-3">
                 <div class="header-logo">
                     <a href="{% url 'home' %}" class="logo">
                         <img src="{% static 'images/eg.png'%}" alt="">
@@ -79,7 +83,7 @@
             <!-- /LOGO -->
 
             <!-- ACCOUNT -->
-            <div class="col-md-3 col-md-offset-6 clearfix">
+            <div class="col-lg-4 col-md-3 col-md-offset-4 clearfix">
                 <div class="header-ctn text-right">
                     <!-- Wishlist -->
                     <div>
@@ -93,13 +97,28 @@
 
                     <!-- Cart -->
                     <div class="dropdown">
-                        <a  href="{% url 'clist' %}">
+                        <a  href="{% url 'clist' %}?next={{ request.get_full_path }}">
                             <i class="fa fa-shopping-cart"></i>
                             <span>Your Cart</span>
-                            <div class="qty">3</div>
+                            <div class="qty">{{c_count}}</div>
                         </a>
                     </div>
                     <!-- /Cart -->
+                    <div class="">
+                        <a  href="#">
+                            <i class="fa-solid fa-bag-shopping"></i>
+                            <span>Your Orders</span>
+                            <div class="qty">2</div>
+                        </a>
+                    </div>
+
+                    <div class="menu-toggle">
+						<a href="#">
+							<i class="fa fa-bars"></i>
+							<span>Menu</span>
+						</a>
+					</div>
+
                 </div>
             </div>
             <!-- /ACCOUNT -->
@@ -108,17 +127,6 @@
     </div>
     <!-- /container -->
 </div>
-
-<!-- /Menu Toogle -->
-</div>
-</div>
-<!-- /ACCOUNT -->
-</div>
-<!-- row -->
-</div>
-<!-- container -->
-</div>
-<!-- /MAIN HEADER -->
 </header>
 <!-- /HEADER -->
 
@@ -255,7 +263,7 @@
                                             </div>
                                         </div>
                                         <div class="add-to-cart">
-                                            <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> Buy Now</button>
+                                            <button class="add-to-cart-btn"><i class="fa-solid fa-bag-shopping"></i>Buy Now</button>
                                         </div>
                                     </a>
                                 </div>
@@ -317,7 +325,7 @@
                                             </div>
                                         </div>
                                         <div class="add-to-cart">
-                                            <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> Buy Now</button>
+                                            <button class="add-to-cart-btn"><i class="fa-solid fa-bag-shopping"></i> Buy Now</button>
                                         </div>
                                     </a>
                                 </div>
@@ -428,7 +436,13 @@
           <div class="footer">
             <h3 class="footer-title">Service</h3>
             <ul class="footer-links">
-              <li><a href="#">My Account</a></li>
+               {% if user.is_authenticated %}
+                    <!-- Show username if the user is authenticated -->
+                    <li><a href="#"><i class="fa fa-user-o"></i> {{ user.username }}</a></li>
+                {% else %}
+                    <!-- Show login link if the user is not authenticated -->
+                    <li><a href="{% url 'log' %}?next={{ request.get_full_path }}"><i class="fa fa-user-o"></i>Login</a></li>
+                {% endif %}
               <li><a href="#">View Cart</a></li>
               <li><a href="#">Wishlist</a></li>
             </ul>

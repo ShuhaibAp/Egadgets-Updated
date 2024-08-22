@@ -27,7 +27,7 @@ class Cart(models.Model):
     product=models.ForeignKey(Product,on_delete=models.CASCADE)
     user=models.ForeignKey(User,on_delete=models.CASCADE)
     date=models.DateField(auto_now_add=True)
-    quantity=models.IntegerField(default=1)
+    quantity=models.PositiveIntegerField(default=1)
     @property
     def total_amount(self):
         return self.product.price * self.quantity
@@ -51,3 +51,10 @@ class Orders(models.Model):
     @property
     def total_amount(self):
         return self.product.price * self.quantity
+
+class Reviews(models.Model):
+    content=models.CharField(max_length=750,null=False)
+    user=models.ForeignKey(User,on_delete=models.CASCADE)
+    product=models.ForeignKey(Product,on_delete=models.CASCADE)
+    date=models.DateTimeField(auto_now_add=True)
+    

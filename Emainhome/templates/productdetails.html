@@ -54,9 +54,6 @@
 					<div class="col-md-5">
 						<div class="product-details">
 							<h2 class="product-name">{{product.title}}</h2>
-							<div
-								<a class="review-link" href="#">10 Review(s) | Add your review</a>
-							</div>
 							<div>
 								<h3 class="product-price">&#8377; {{product.price}} <del class="product-old-price">&#8377; {{product.oldprice}}</del></h3>
 								<span class="product-available">In Stock</span>
@@ -64,21 +61,20 @@
 							<p>{{product.desc}}</p>
 
 							<div class="product-options">
-							<!-- <div class="add-to-cart"> -->
+							<div class="add-to-cart">
 								<div class="qty-label">
 									Qty
 									<form action="{% url 'cprod' id=product.id %}" method="post">
 										{% csrf_token %}
-										<!-- <div class="input-number"> -->
+										<div class="input-number">
 										<input type="number" class="form-control w-25 " min="1" max="10" value="1" name="qty">
-										<!-- </div> -->
-									<!--  -->
-									<div class="add-to-cart">
-										<button type="submit" class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i>Add to Cart</button>
 										</div>
+									<!-- <div class="add-to-cart"> -->
+										<button type="submit" class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i>Add to Cart</button>
+					
 									</form>
-									</div>	
-
+									</div>
+								</div>	
 							</div>
 
 							<ul class="product-btns">
@@ -106,89 +102,47 @@
 					<div class="col-md-12">
 						<div id="product-tab">
 							<!-- product tab nav -->
-							<ul class="tab-nav">
-								<li class="active"><a data-toggle="tab" href="#tab1">Description</a></li>
-								<li><a data-toggle="tab" href="#tab3">Reviews (3)</a></li>
-							</ul>
+							<div class="tab-nav">
+								<h4>Reviews <span>({{r_count}})</span></h4>
+							</div>
 							<!-- /product tab nav -->
-
-							<!-- product tab content -->
-							<div class="tab-content">
-								<!-- tab1  -->
-								<div id="tab1" class="tab-pane fade in active">
-									<div class="row">
-										<div class="col-md-12">
-											<p>{{product.desc}}</p>
-										</div>
-									</div>
-								</div>
-								<!-- /tab1  -->
-
 								<!-- tab3  -->
 								<div id="tab3" class="tab-pane fade in">
 									<div class="row">
 										<!-- Reviews -->
 										<div class="col-md-6">
 											<div id="reviews">
-												<ul class="reviews">
-													<li>
-														<div class="review-heading">
-															<h5 class="name">John</h5>
-															<p class="date">27 DEC 2018, 8:0 PM</p>
-														</div>
-														<div class="review-body">
-															<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>
-														</div>
-													</li>
-													<li>
-														<div class="review-heading">
-															<h5 class="name">John</h5>
-															<p class="date">27 DEC 2018, 8:0 PM</p>
-														
-														</div>
-														<div class="review-body">
-															<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>
-														</div>
-													</li>
-													<li>
-														<div class="review-heading">
-															<h5 class="name">John</h5>
-															<p class="date">27 DEC 2018, 8:0 PM</p>
-													
-														</div>
-														<div class="review-body">
-															<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>
-														</div>
-													</li>
-												</ul>
-												<ul class="reviews-pagination">
-													<li class="active">1</li>
-													<li><a href="#">2</a></li>
-													<li><a href="#">3</a></li>
-													<li><a href="#">4</a></li>
-													<li><a href="#"><i class="fa fa-angle-right"></i></a></li>
-												</ul>
+												{% if review %}
+													<ul class="reviews">
+														{% for review in review %}
+														<li>
+															<div class="review-heading">
+																<h5 class="name">{{ review.user.username }}</h5>
+																<p class="date">{{ review.date }}</p>
+															</div>
+															<div class="review-body">
+																<p>{{ review.content }}</p>
+															</div>
+														</li>
+														{% endfor %}
+													</ul>
+												{% else %}
+													<div class="review-body">
+														<p>No reviews available.</p>
+													</div>
+												{% endif %}
 											</div>
 										</div>
+									</div>
+								</div>
 										<!-- /Reviews -->
 
 										<!-- Review Form -->
 										<div class="col-md-3">
 											<div id="review-form">
-												<form class="review-form">
-													<input class="input" type="text" placeholder="Your Name">
-													<input class="input" type="email" placeholder="Your Email">
-													<textarea class="input" placeholder="Your Review"></textarea>
-													<!-- <div class="input-rating">
-														<span>Your Rating: </span>
-														<div class="stars">
-															<input id="star5" name="rating" value="5" type="radio"><label for="star5"></label>
-															<input id="star4" name="rating" value="4" type="radio"><label for="star4"></label>
-															<input id="star3" name="rating" value="3" type="radio"><label for="star3"></label>
-															<input id="star2" name="rating" value="2" type="radio"><label for="star2"></label>
-															<input id="star1" name="rating" value="1" type="radio"><label for="star1"></label>
-														</div>
-													</div> -->
+												<form action="{% url 'revadd' product.id %}" method="post">
+													{% csrf_token %}
+													<textarea class="input" placeholder="Your Review" name="user-review"></textarea>
 													<button class="primary-btn">Submit</button>
 												</form>
 											</div>
@@ -251,7 +205,7 @@
                             </div>
                         </div>
                         <div class="add-to-cart">
-                            <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> Buy Now</button>
+                            <button class="add-to-cart-btn"><i class="fa-solid fa-bag-shopping"></i> Buy Now</button>
                         </div>
                     </div>
                 </a>

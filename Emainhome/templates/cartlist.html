@@ -11,6 +11,7 @@
                 </div>
                 <div class="table-responsive">
                     <table class="table table-striped align-middle">
+                        {% if cart %}
                         <thead>
                             <tr>
                                 <th scope="col">Product</th>
@@ -35,20 +36,23 @@
                                 </td>
                                 <td class="cart-quantity">
                                     <div class="d-flex align-items-center">
-                                        <a href="#" class="btn btn-outline-secondary btn-sm"><i class="fa-solid fa-minus fa-xs" style="color: #000000;"></i></a>
+                                        <a href="{% url 'decQ' i.id %}" class="btn btn-outline-secondary btn-sm"><i class="fa-solid fa-minus fa-xs" style="color: #000000;"></i></a>
                                         <span class="mx-2">{{i.quantity}}</span>
-                                        <a href="#" class="btn btn-outline-secondary btn-sm"><i class="fa-solid fa-plus fa-xs" style="color: #000000;"></i></a>
+                                        <a href="{% url 'incQ' i.id %}" class="btn btn-outline-secondary btn-sm"><i class="fa-solid fa-plus fa-xs" style="color: #000000;"></i></a>
                                     </div>
                                 </td>
                                 <td class="cart-total">
                                     <h5>&#8377; {{i.total_amount}}</h5>
                                 </td>
                                 <td class="cart-actions">
-                                    <a href="#" class="btn btn-outline-danger btn-sm"><i class="fa-solid fa-trash"></i></a>
-                                    <a href="#" class="btn btn-outline-success btn-sm mx-2"><i class="fa-regular fa-credit-card"></i> Check Out</a>
+                                    <a href="{% url 'remC' i.id %}" class="btn btn-outline-danger btn-sm" style="color: red; font-size: 15px;"><i class="fa-solid fa-trash"></i></a>
+                                    <a href="{% url 'chk' i.id %}" class="btn btn-outline-success btn-sm mx-2" style="color: green; font-size: 14px;"><i class="fa-regular fa-credit-card" style="color: green; font-size: 15px;"></i> Check Out</a>
                                 </td>
                             </tr>
                             {% endfor %}
+                            {% else %}
+                            <p class="text-center text-danger" style="font-size: 15px;font-weight: 600;margin-bottom: 200px; " >Your Cart is empty!</p>
+                            {% endif %}
                         </tbody>
                     </table>
                 </div>

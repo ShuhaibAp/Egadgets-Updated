@@ -15,7 +15,7 @@ class ERegForm(UserCreationForm):
         'first_name':forms.TextInput(attrs={"class":"form-control form-control-lg ","placeholder":"First Name"}),
         'last_name':forms.TextInput(attrs={"class":"form-control form-control-lg","placeholder":"Last Name"}),
         'email':forms.EmailInput(attrs={"class":"form-control form-control-lg ","placeholder":"Email"}),
-        'username':forms.TextInput(attrs={"class":"form-control form-control-lg ","placeholder":"UserName"}),
+        'username':forms.TextInput(attrs={"class":"form-control form-control-lg ","placeholder":"Username"}),
         }
     password1 = forms.CharField(
             label=("Password"),
