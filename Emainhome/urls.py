@@ -12,4 +12,5 @@ urlpatterns=[
     path('decQ/<int:id>',DecQuantity,name='decQ'),
     path('RemC/<int:id>',RemoveCart,name='remC'),
     path('Chk/<int:id>',CheckOut.as_view(),name='chk'),
+    path('Olist/',OrderList.as_view(),name='olist'),
 ]

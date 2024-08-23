@@ -1,0 +1,67 @@
+{% extends 'homepage.html' %}
+{% block home %}
+<!-- SECTION -->
+<div class="section">
+    <div class="container">
+        <div class="row">
+            <!-- Order List -->
+            <div class="col-12">
+                <div class="section-title text-center">
+                    <h3 class="title">Your Orders</h3>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-striped align-middle">
+                        {% if order %}
+                        <thead>
+                            <tr>
+                                <th scope="col">Product</th>
+                                <th scope="col"></th>
+                                <th scope="col">Price</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Address</th>
+                                <th scope="col">Phone Number</th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in order %}
+                            <tr>
+                                <td class="order-pic">
+                                    <img src="{{item.product.image.url}}" alt="Product Image" class="img-thumbnail" style="height: 100px; width: 100px;">
+                                </td>
+                                <td class="order-title">
+                                    <h4 class="product-name">{{item.product.title}}</h4>
+                                </td>
+                                <td class="order-price">
+                                    <h5>&#8377; {{item.product.price}}</h5>
+                                </td>
+                                <td class="order-status">
+                                    <h5>{{item.status}}</h5>
+                                </td>
+                                <td class="order-address">
+                                    <p>{{item.address}}</p>
+                                </td>
+                                <td class="order-phone">
+                                    <p>{{item.phone}}</p>
+                                </td>
+                                    <td class="order-actions">
+                                        {% if item.status == 'Order Placed' or item.status == 'Order Shipped' %}
+                                        <a href="#" class="btn btn-outline-danger btn-sm" style="color: red; font-size: 15px;"><i class="fa-solid fa-times-circle"></i> Cancel Order</a><br>
+                                        <a href="#" class="btn btn-outline-danger btn-sm" style="color: green; font-size: 15px;"><i class="fa-regular fa-pen-to-square"></i> Change Address</a>
+                                        {% endif %}
+                                    </td>
+                            </tr>
+                            {% endfor %}
+                            {% else %}
+                            <p class="text-center text-danger" style="font-size: 15px;font-weight: 600;margin-bottom: 200px;">You have no orders!</p>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- /Order List -->
+        </div>
+    </div>
+</div>
+<!-- /SECTION -->
+{% endblock home %}

@@ -47,7 +47,7 @@ class Orders(models.Model):
     )
     status=models.CharField(max_length=50,default="Order Placed",choices=options)
     def __str__(self):
-        return self.title
+        return self.product.title
     @property
     def total_amount(self):
         return self.product.price * self.quantity

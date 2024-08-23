@@ -47,6 +47,7 @@
                                         </div>
                                         {% endif %}
                                     </div>
+                                    </a>
                                     <div class="product-body">
                                         <p class="product-category">{{i.category}}</p>
                                         <h3 class="product-name">{{i.title}}</h3>
@@ -56,11 +57,13 @@
                                             <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
                                         </div>
                                     </div>
+                                    <form action="{% url 'pdet' i.id %}">
                                     <div class="add-to-cart">
                                         <button class="add-to-cart-btn"><i class="fa-solid fa-bag-shopping"></i> Buy Now</button>
                                     </div>
+                                    </form>
                                 </div>
-                            </a>
+                            
                         </div>
                         {% endfor %}
                     </div>

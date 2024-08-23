@@ -66,6 +66,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'Emainhome.context_processors.cart_count',
                 'Emainhome.context_processors.review_count',
+                'Emainhome.context_processors.order_count',
             ],
         },
     },

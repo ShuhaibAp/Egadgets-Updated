@@ -108,7 +108,7 @@ def AddReview(request,*args,**kwargs):
     prod=Product.objects.get(id=pid)
     if not request.user.is_authenticated:
         request.session['next'] = request.get_full_path()
-        return redirect('log')
+        return redirect('log')  
     user=request.user
     rev=request.POST.get('user-review')
     if not rev:
@@ -116,6 +116,7 @@ def AddReview(request,*args,**kwargs):
     Reviews.objects.create(content=rev,user=user,product=prod)
     next_url = request.session.pop('next', 'pdet')
     return redirect ('pdet', id=prod.id)
+
 class CheckOut(DetailView):
     template_name="checkout.html"
     queryset=Cart.objects.all()
@@ -128,7 +129,17 @@ class CheckOut(DetailView):
         cart=Cart.objects.get(id=pid)
         prod=cart.product
         quant=cart.quantity
+        if not request.user.is_authenticated:
+            request.session['next'] = request.get_full_path()
+            return redirect('log')
         user=request.user
         Orders.objects.create(product=prod,user=user,quantity=quant,address=addr,phone=ph)
         cart.delete()
         return redirect('clist')
+
+class OrderList(ListView):
+    template_name="orderlist.html"
+    queryset=Orders.objects.all()
+    context_object_name='order'
+    def get_queryset(self):
+        return super().get_queryset().filter(user=self.request.user)

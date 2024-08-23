@@ -50,12 +50,11 @@
                 {% if user.is_authenticated %}
                     <!-- Show username if the user is authenticated -->
                     <li><a href="#"><i class="fa fa-user-o"></i> {{ user.username }}</a></li>
-                    {% for i in cart %}
-                    {% if request.path != '/clist/' and request.path != '/Chk/i.id' %}
+                    {% if request.path != '/clist/' and '/Chk/' not in request.path and '/Olist/' not in request.path %}
                     <!--a logout link -->
                     <li><a href="{% url 'lout' %}?next={{ request.get_full_path }}"><i class="fa fa-sign-out"></i> Logout</a></li>
                     {% endif %}
-                    {% endfor %}
+                  
                 {% else %}
                     <!-- Show login link if the user is not authenticated -->
                     <li><a href="{% url 'log' %}?next={{ request.get_full_path }}"><i class="fa fa-user-o"></i> Login</a></li>
@@ -105,10 +104,10 @@
                     </div>
                     <!-- /Cart -->
                     <div class="">
-                        <a  href="#">
+                        <a  href="{% url 'olist' %}">
                             <i class="fa-solid fa-bag-shopping"></i>
                             <span>Your Orders</span>
-                            <div class="qty">2</div>
+                            <div class="qty">{{o_count}}</div>
                         </a>
                     </div>
 
@@ -251,6 +250,7 @@
                                                 <span class="new">NEW</span>
                                             </div>
                                         </div>
+                                        </a>
                                         <div class="product-body">
                                             <p class="product-category">{{ i.category }}</p>
                                             <h3 class="product-name">{{ i.title }}</h3>
@@ -262,10 +262,11 @@
                                                 <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
                                             </div>
                                         </div>
+                                        <form action="{% url 'pdet' i.id %}">
                                         <div class="add-to-cart">
                                             <button class="add-to-cart-btn"><i class="fa-solid fa-bag-shopping"></i>Buy Now</button>
                                         </div>
-                                    </a>
+                                        </form>
                                 </div>
                                 {% endif %}
                                 {% endfor %}
@@ -315,6 +316,7 @@
                                                 <span class="new">Top Selling</span>
                                             </div>
                                         </div>
+                                        </a>
                                         <div class="product-body">
                                             <p class="product-category">{{i.category}}</p>
                                             <h3 class="product-name">{{i.title}}</h3>
@@ -324,11 +326,12 @@
                                                 <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
                                             </div>
                                         </div>
+                                        <form action="{% url 'pdet' i.id %}">
                                         <div class="add-to-cart">
                                             <button class="add-to-cart-btn"><i class="fa-solid fa-bag-shopping"></i> Buy Now</button>
                                         </div>
-                                    </a>
-                                </div>
+                                        </form>
+                                    </div>
                                 {% endif %}
                                 {% endfor %}
                                 <!-- /product -->
@@ -343,10 +346,9 @@
     </div>
     <!-- /container -->
 </div>
+<!-- /product -->
 
-									
-										<!-- /product -->								
-		<!-- /SECTION -->
+<!-- /SECTION -->
 {% endblock home %}
 		<!-- NEWSLETTER -->
 		<div id="newsletter" class="section">
