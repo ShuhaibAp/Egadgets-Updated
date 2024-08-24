@@ -143,3 +143,22 @@ class OrderList(ListView):
     context_object_name='order'
     def get_queryset(self):
         return super().get_queryset().filter(user=self.request.user)
+
+def AddWish(request,*args,**kwargs):
+    pid=kwargs.get('id')
+    product=Product.objects.get(id=pid)
+    product.wish.add(request.user)
+    return redirect('home')
+
+class WishList(ListView):
+    template_name='wishlist.html'
+    queryset=Product.objects.all()
+    context_object_name='items'
+    def get_queryset(self):
+        return super().get_queryset().filter(wish=self.request.user)
+
+def RemoveWish(request,*args,**kwargs):
+    pid=kwargs.get('id')
+    product=Product.objects.get(id=pid)
+    product.wish.remove(request.user)
+    return redirect('wlist')

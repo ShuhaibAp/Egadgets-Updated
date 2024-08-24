@@ -13,4 +13,7 @@ urlpatterns=[
     path('RemC/<int:id>',RemoveCart,name='remC'),
     path('Chk/<int:id>',CheckOut.as_view(),name='chk'),
     path('Olist/',OrderList.as_view(),name='olist'),
+    path('wadd/<int:id>',AddWish,name='wadd'),
+    path('wlist/',WishList.as_view(),name='wlist'),
+    path('wdel/<int:id>',RemoveWish,name='wdel'),
 ]

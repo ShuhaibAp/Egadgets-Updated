@@ -3,64 +3,66 @@
 <!-- SECTION -->
 <div class="section">
     <div class="container">
+        <div class="section-title text-center">
+            <h3 class="title">Your Orders</h3>
+        </div>
+        {% if order %}
         <div class="row">
-            <!-- Order List -->
-            <div class="col-12">
-                <div class="section-title text-center">
-                    <h3 class="title">Your Orders</h3>
-                </div>
-                <div class="table-responsive">
-                    <table class="table table-striped align-middle">
-                        {% if order %}
-                        <thead>
-                            <tr>
-                                <th scope="col">Product</th>
-                                <th scope="col"></th>
-                                <th scope="col">Price</th>
-                                <th scope="col">Status</th>
-                                <th scope="col">Address</th>
-                                <th scope="col">Phone Number</th>
-                                <th scope="col"></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for item in order %}
-                            <tr>
-                                <td class="order-pic">
-                                    <img src="{{item.product.image.url}}" alt="Product Image" class="img-thumbnail" style="height: 100px; width: 100px;">
-                                </td>
-                                <td class="order-title">
-                                    <h4 class="product-name">{{item.product.title}}</h4>
-                                </td>
-                                <td class="order-price">
-                                    <h5>&#8377; {{item.product.price}}</h5>
-                                </td>
-                                <td class="order-status">
-                                    <h5>{{item.status}}</h5>
-                                </td>
-                                <td class="order-address">
-                                    <p>{{item.address}}</p>
-                                </td>
-                                <td class="order-phone">
-                                    <p>{{item.phone}}</p>
-                                </td>
-                                    <td class="order-actions">
-                                        {% if item.status == 'Order Placed' or item.status == 'Order Shipped' %}
-                                        <a href="#" class="btn btn-outline-danger btn-sm" style="color: red; font-size: 15px;"><i class="fa-solid fa-times-circle"></i> Cancel Order</a><br>
-                                        <a href="#" class="btn btn-outline-danger btn-sm" style="color: green; font-size: 15px;"><i class="fa-regular fa-pen-to-square"></i> Change Address</a>
-                                        {% endif %}
-                                    </td>
-                            </tr>
-                            {% endfor %}
-                            {% else %}
-                            <p class="text-center text-danger" style="font-size: 15px;font-weight: 600;margin-bottom: 200px;">You have no orders!</p>
+            {% for item in order %}
+            <div class="col-md-4">
+                <div class="order-item card mb-4">
+                    <div class="card-body position-relative">
+                        <!-- Product Image -->
+                        <div class="order-image text-center mb-3">
+                            <img src="{{item.product.image.url}}" alt="{{item.product.title}}" class="img-fluid" style="height: 150px;">
+                        </div>
+
+                        <!-- Product Title -->
+                        <h5 class="card-title text-center">
+                            {{item.product.title}}
+                        </h5>
+
+                        <!-- Product Price -->
+                        <p class="card-text text-center text-muted">
+                            &#8377; {{item.product.price}}
+                        </p>
+
+                        <!-- Order Status -->
+                        <p class="card-text text-center">
+                            <strong>Status:</strong> {{item.status}}
+                        </p>
+
+                        <!-- Address -->
+                        <p class="card-text text-center">
+                            <strong>Address:</strong> {{item.address}}
+                        </p>
+
+                        <!-- Phone Number -->
+                        <p class="card-text text-center">
+                            <strong>Phone:</strong> {{item.phone}}
+                        </p>
+
+                        <!-- Order Actions -->
+                        <div class="text-center">
+                            {% if item.status == 'Order Placed' or item.status == 'Order Shipped' %}
+                            <a href="#" class="btn btn-danger btn-sm mb-2">
+                                <i class="fa-solid fa-times-circle"></i> Cancel Order
+                            </a>
+                            <a href="#" class="btn btn-success btn-sm">
+                                <i class="fa-regular fa-pen-to-square"></i> Change Address
+                            </a>
                             {% endif %}
-                        </tbody>
-                    </table>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <!-- /Order List -->
+            {% endfor %}
         </div>
+        {% else %}
+        <p class="text-center text-danger" style="font-size: 15px; font-weight: 600; margin-bottom: 200px;">
+            You have no orders!
+        </p>
+        {% endif %}
     </div>
 </div>
 <!-- /SECTION -->

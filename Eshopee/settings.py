@@ -67,6 +67,7 @@ TEMPLATES = [
                 'Emainhome.context_processors.cart_count',
                 'Emainhome.context_processors.review_count',
                 'Emainhome.context_processors.order_count',
+                'Emainhome.context_processors.wish_count',
             ],
         },
     },

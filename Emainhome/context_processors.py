@@ -18,3 +18,9 @@ def order_count(request):
         order_count=Orders.objects.filter(user=request.user).count()
         return {"o_count":order_count}
     return {"o_count":0}
+
+def wish_count(request):
+    if request.user.is_authenticated:
+        wish_count=Product.objects.filter(wish=request.user).count()
+        return {"w_count":wish_count}
+    return {"w_count":0}

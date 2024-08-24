@@ -50,7 +50,7 @@
                 {% if user.is_authenticated %}
                     <!-- Show username if the user is authenticated -->
                     <li><a href="#"><i class="fa fa-user-o"></i> {{ user.username }}</a></li>
-                    {% if request.path != '/clist/' and '/Chk/' not in request.path and '/Olist/' not in request.path %}
+                    {% if request.path != '/clist/' and '/Chk/' not in request.path and '/Olist/' not in request.path and '/wlist/' not in request.path %}
                     <!--a logout link -->
                     <li><a href="{% url 'lout' %}?next={{ request.get_full_path }}"><i class="fa fa-sign-out"></i> Logout</a></li>
                     {% endif %}
@@ -86,10 +86,10 @@
                 <div class="header-ctn text-right">
                     <!-- Wishlist -->
                     <div>
-                        <a href="#">
+                        <a href="{% url 'wlist'  %}">
                             <i class="fa fa-heart-o"></i>
                             <span>Your Wishlist</span>
-                            <div class="qty">2</div>
+                            <div class="qty">{{w_count}}</div>
                         </a>
                     </div>
                     <!-- /Wishlist -->
@@ -258,7 +258,9 @@
                                                 <del class="product-old-price">&#8377;{{ i.oldprice }}</del>
                                             </h4>
                                             <div class="product-btns">
+                                                <form action="{% url 'wadd' i.id %}">
                                                 <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
+                                                </form>
                                                 <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
                                             </div>
                                         </div>
