@@ -3,9 +3,15 @@ from django.urls import reverse
 from django.views.generic import TemplateView,ListView,DetailView,CreateView
 from django.contrib import messages
 from accounts.models import *
+from django.views.decorators.cache import never_cache
+from django.utils.decorators import method_decorator
 # Create your views here.
 class HomePage(TemplateView):
     template_name="homepage.html"
+
+    @method_decorator(never_cache)
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -16,6 +22,11 @@ class ProductListLink(ListView):
     template_name="productlist.html"
     queryset=Product.objects.all()
     context_object_name="products"
+
+    @method_decorator(never_cache)
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
+
     def get_queryset(self):
         qset=super().get_queryset().filter(category=self.kwargs.get('cat'))
         return qset
@@ -26,6 +37,7 @@ class ProductDetails(DetailView):
     context_object_name="product"
     pk_url_kwarg='id'
 
+    @method_decorator(never_cache)
     def dispatch(self,request,*args,**kwargs):
         if 'pdet/' in request.path:
             return super().dispatch(request, *args, **kwargs)
@@ -45,6 +57,7 @@ class ProductDetails(DetailView):
         context['relProducts']=Product.objects.filter(category=prod.category).exclude(id=prod.id)
         return context
 
+@never_cache
 def CartAdd(request,*args,**kwargs):
     pid=kwargs.get('id')
     prod=Product.objects.get(id=pid)
@@ -69,6 +82,7 @@ class CartList(ListView):
     queryset=Cart.objects.all()
     context_object_name='cart'
     
+    @method_decorator(never_cache)
     def dispatch(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
             request.session['next'] = request.get_full_path()
@@ -78,6 +92,7 @@ class CartList(ListView):
     def get_queryset(self):
         return super().get_queryset().filter(user=self.request.user)
 
+@never_cache
 def IncQuantity(request,**kwargs):
     pid=kwargs.get('id')
     cart=Cart.objects.get(id=pid)
@@ -85,6 +100,7 @@ def IncQuantity(request,**kwargs):
     cart.save()
     return redirect('clist')
 
+@never_cache
 def DecQuantity(request,**kwargs):
     pid=kwargs.get('id')
     cart=Cart.objects.get(id=pid)
@@ -96,13 +112,14 @@ def DecQuantity(request,**kwargs):
         cart.save()
     return redirect('clist')
 
+@never_cache
 def RemoveCart(request,**kwargs):
     pid=kwargs.get('id')
     cart=Cart.objects.get(id=pid)
     cart.delete()
     return redirect('clist')
 
-    
+@never_cache
 def AddReview(request,*args,**kwargs):
     pid=kwargs.get('id')
     prod=Product.objects.get(id=pid)
@@ -137,13 +154,23 @@ class CheckOut(DetailView):
         cart.delete()
         return redirect('clist')
 
+    @method_decorator(never_cache)
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
+
 class OrderList(ListView):
     template_name="orderlist.html"
     queryset=Orders.objects.all()
     context_object_name='order'
+
+    @method_decorator(never_cache)
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
+
     def get_queryset(self):
         return super().get_queryset().filter(user=self.request.user)
 
+@never_cache
 def AddWish(request,*args,**kwargs):
     pid=kwargs.get('id')
     product=Product.objects.get(id=pid)
@@ -154,9 +181,15 @@ class WishList(ListView):
     template_name='wishlist.html'
     queryset=Product.objects.all()
     context_object_name='items'
+
+    @method_decorator(never_cache)
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
+
     def get_queryset(self):
         return super().get_queryset().filter(wish=self.request.user)
 
+@never_cache
 def RemoveWish(request,*args,**kwargs):
     pid=kwargs.get('id')
     product=Product.objects.get(id=pid)

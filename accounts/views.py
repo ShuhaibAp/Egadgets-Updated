@@ -4,6 +4,8 @@ from django.views.generic import TemplateView,CreateView,FormView
 from django.contrib import messages
 from django.contrib.auth import authenticate,login,logout
 from .forms import *
+from django.views.decorators.cache import never_cache
+from django.utils.decorators import method_decorator
 # Create your views here.
 
 class LoginView(FormView):
@@ -24,11 +26,16 @@ class LoginView(FormView):
                 messages.error(request, "Invalid Username or Password")
         return render(request, "login.html", {'form': form_data})
 
+    @method_decorator(never_cache)
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['next'] = self.request.GET.get('next', '/')
         return context
 
+@never_cache
 def logoutView(request):
     logout(request)
     next_url = request.GET.get('next','/')
@@ -38,3 +45,8 @@ class RegView(CreateView):
     template_name="register.html"
     form_class=ERegForm
     success_url=reverse_lazy('log')
+
+    @method_decorator(never_cache)
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
+
