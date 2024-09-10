@@ -65,17 +65,15 @@
                     <strong>{{ message }}</strong>
                 </div>
                 {% endif %}
-          {% endfor %}
-        {% endif %}
+            {% endfor %}
+            {% endif %}
               <div class="col-12">
-                <label for="text" class="form-label">Username <span class="text-danger">*</span></label>
                 {% if form.username.errors %}
                   <div class="alert alert-danger">{{ form.username.errors }}</div>
                 {% endif %}
                 {{ form.username }}
               </div>
               <div class="col-12">
-                <label for="password" class="form-label">Password <span class="text-danger">*</span></label>
                 {% if form.password.errors %}
                   <div class="alert alert-danger">{{ form.password.errors }}</div>
                 {% endif %}

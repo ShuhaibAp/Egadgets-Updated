@@ -6,27 +6,6 @@
             <div class="row">
                 <!-- STORE -->
                 <div id="store" class="col-md-12">
-                    <!-- store top filter -->
-                    <div class="store-filter clearfix">
-                        <div class="store-sort">
-                            <label>
-                                Sort By:
-                                <select class="input-select">
-                                    <option value="0">Popular</option>
-                                    <option value="1">Position</option>
-                                </select>
-                            </label>
-
-                            <label>
-                                Show:
-                                <select class="input-select">
-                                    <option value="0">20</option>
-                                    <option value="1">50</option>
-                                </select>
-                            </label>
-                        </div>
-                    </div>
-                    <!-- /store top filter -->
 
                     <!-- store products -->
 					<div class="row">
@@ -53,8 +32,7 @@
                                         <h3 class="product-name">{{i.title}}</h3>
                                         <h4 class="product-price">&#8377; {{i.price}} <del class="product-old-price">&#8377; {{i.oldprice}}</del></h4>
                                         <div class="product-btns">
-                                            <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
-                                            <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
+                                            <a class="add-to-wishlist" href="{% url 'wadd' i.id %}" ><i class="fa fa-heart-o"></i></a>
                                         </div>
                                     </div>
                                     <form action="{% url 'pdet' i.id %}">

@@ -258,10 +258,7 @@
                                                 <del class="product-old-price">&#8377;{{ i.oldprice }}</del>
                                             </h4>
                                             <div class="product-btns">
-                                                <form action="{% url 'wadd' i.id %}">
-                                                <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
-                                                </form>
-                                                <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
+                                                <a class="add-to-wishlist" href="{% url 'wadd' i.id %}" ><i class="fa fa-heart-o"></i></a>
                                             </div>
                                         </div>
                                         <form action="{% url 'pdet' i.id %}">
@@ -324,8 +321,7 @@
                                             <h3 class="product-name">{{i.title}}</h3>
                                             <h4 class="product-price">&#8377;{{i.price}} <del class="product-old-price">&#8377;{{i.oldprice}}</del></h4>
                                             <div class="product-btns">
-                                                <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
-                                                <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
+                                                <a class="add-to-wishlist" href="{% url 'wadd' i.id %}" ><i class="fa fa-heart-o"></i></a>
                                             </div>
                                         </div>
                                         <form action="{% url 'pdet' i.id %}">
@@ -399,7 +395,7 @@
         <div class="col-md-3 col-xs-6">
           <div class="footer">
             <h3 class="footer-title">About Us</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut.</p>
+            <p>Egadgets is your go-to destination for the latest tech gadgets.Discover the future of technology with us!</p>
             <ul class="footer-links">
               <li><a href="#"><i class="fa fa-map-marker"></i>Bengaluru,India</a></li>
               <li><a href="#"><i class="fa fa-phone"></i>+021-95-51-84</a></li>
