@@ -45,12 +45,12 @@
                         <!-- Order Actions -->
                         <div class="text-center">
                             {% if item.status == 'Order Placed' or item.status == 'Order Shipped' %}
-                            <a href="#" class="btn btn-danger btn-sm mb-2">
+                            <a href="{% url 'odel' item.id %}" class="btn btn-danger btn-sm mb-2" onclick="return confirm ('Are you sure you want to camcel this order?')">
                                 <i class="fa-solid fa-times-circle"></i> Cancel Order
                             </a>
-                            <a href="#" class="btn btn-success btn-sm">
+                            <!-- <a href="#" class="btn btn-success btn-sm">
                                 <i class="fa-regular fa-pen-to-square"></i> Change Address
-                            </a>
+                            </a> -->
                             {% endif %}
                         </div>
                     </div>

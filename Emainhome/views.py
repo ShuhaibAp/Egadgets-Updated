@@ -5,6 +5,7 @@ from django.contrib import messages
 from accounts.models import *
 from django.views.decorators.cache import never_cache
 from django.utils.decorators import method_decorator
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 # Create your views here.
 class HomePage(TemplateView):
     template_name="homepage.html"
@@ -22,10 +23,7 @@ class ProductListLink(ListView):
     template_name="productlist.html"
     queryset=Product.objects.all()
     context_object_name="products"
-
-    # @method_decorator(never_cache)
-    # def dispatch(self, *args, **kwargs):
-    #     return super().dispatch(*args, **kwargs)
+    paginate_by=12
 
     def get_queryset(self):
         qset=super().get_queryset().filter(category=self.kwargs.get('cat'))
@@ -53,7 +51,15 @@ class ProductDetails(DetailView):
         reviews=Reviews.objects.filter(product=prod)
         context['review']=reviews
         #taking the products from table based on category with ignoring current product and passing to 'relProducts' context.
-        context['relProducts']=Product.objects.filter(category=prod.category).exclude(id=prod.id)
+        # context['relProducts']=Product.objects.filter(category=prod.category).exclude(id=prod.id)
+        # return context
+        relProducts = Product.objects.filter(category=prod.category).exclude(id=prod.id)
+        # Implementing pagination for related products (10 products per page)
+        paginator = Paginator(relProducts, 8)  # Show 10 related products per page
+        page_number = self.request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+        # Adding paginated related products to the context
+        context['page_obj'] = page_obj
         return context
 
 
@@ -207,3 +213,9 @@ def RemoveWish(request,*args,**kwargs):
     product=Product.objects.get(id=pid)
     product.wish.remove(request.user)
     return redirect('wlist')
+ 
+def RemoveOrder(request,*args,**kwargs):
+    pid=kwargs.get('id')
+    product=Orders.objects.get(id=pid).delete()
+    return redirect('olist')
+ 

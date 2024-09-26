@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 # Create your models here.
 class Product(models.Model):
     title=models.CharField(max_length=30)
-    desc=models.CharField(max_length=100)
+    desc=models.CharField(max_length=300)
     oldprice=models.IntegerField(default=34499)
     price=models.IntegerField()
     options=(
